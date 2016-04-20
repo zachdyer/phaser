@@ -1,6 +1,7 @@
 # Phaser Game Library
 Space Trucking uses Phaser. Phaser is built on top of pixi.js. Pixi.js is a low
-level game library for webgl and fallback to canvas.
+level game library for webgl and fallback to canvas. The demo can be found at
+http://zachdyer.github.io/phaser/
 
 ## Main Game Object
 Phaser uses a main object `game`. The `game` object is declared like this:
