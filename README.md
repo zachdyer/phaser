@@ -25,5 +25,16 @@ The `create` function creates the game after the 'preload' function is finished.
         logo.anchor.setTo(0.5, 0.5);
     }
 
-To create a sprite use `game.add.sprite(x, y, 'assetName')`. Use the name of the
-asset you set when you loaded the image.
+To create a sprite use `var logo = game.add.sprite(x, y, 'assetName')`. Use the
+name of the asset you set when you loaded the image.
+
+To set the alignment position of a sprite use `logo.ancho.setTo(0.5, 0.5)`. This
+will center align the sprite on the x and y axis.
+
+### Update function
+The `update` function updates every tick. Just declare a function called `update`
+and it will be used.
+
+    function update () {
+        
+    }
