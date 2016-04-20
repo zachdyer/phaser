@@ -1,7 +1,8 @@
 // Exporting object to global scope
 var
   game = null,
-  logo = null;
+  logo = null,
+  cursors = null;
 
 window.onload = function() {
 
@@ -12,13 +13,18 @@ window.onload = function() {
     }
 
     function create () {
-        logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
-        logo.anchor.setTo(0.5, 0.5);
+      var logos = game.add.group();
+      logos.enableBody = true;
 
-        game.physics.arcade.enable(logo);
-        logo.body.gravity.y = 300;
-        logo.body.bounce.y = 0.3;
-        logo.body.collideWorldBounds = true;
+      for (var i = 0; i < 12 * Math.random(); i++)
+      {
+          var logo = logos.create(game.world.width * Math.random(), game.world.height * Math.random(), 'logo');
+
+          logo.body.gravity.y = 300;
+          logo.body.bounce.y = 0.3;
+          logo.body.collideWorldBounds = true;
+      }
+
     }
 
     function update () {
