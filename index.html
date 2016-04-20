@@ -4,8 +4,30 @@
     <meta charset="utf-8">
     <script type="text/javascript" src="js/phaser.js"></script>
     <title>Phaser</title>
+    <link rel="stylesheet" href="/css/master.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
-    <canvas id="canvas" width="300" height="300"></canvas>
+    <script type="text/javascript">
+
+    window.onload = function() {
+
+        var game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO, '', { preload: preload, create: create });
+
+        function preload () {
+
+            game.load.image('logo', 'img/phaser.png');
+
+        }
+
+        function create () {
+
+            var logo = game.add.sprite(game.world.centerX, game.world.centerY, 'logo');
+            logo.anchor.setTo(0.5, 0.5);
+
+        }
+
+    };
+
+    </script>
   </body>
 </html>
