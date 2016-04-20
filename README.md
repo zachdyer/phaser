@@ -5,7 +5,14 @@ level game library for webgl and fallback to canvas.
 ## Main Game Object
 Phaser uses a main object `game`. The `game` object is declared like this:
 
-    var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, '', { preload: preload, create: create });
+    var game = new Phaser.Game(gameWidth, gameHeight, Phaser.AUTO, '',
+        { preload: preload, create: create });
+
+`Phaser.AUTO` is used for webgl and canvas as a fallback. To use only webgl use
+`Phaser.WEBGL` or `Phaser.CANVAS` for canvas.
+
+The third parameter is the canvas of the element you want to load the game in.
+If left blank one will be appended to the game.
 
 ### Preloader function
 The `preload` function is where all the game assets are loaded. Just create a
@@ -36,5 +43,5 @@ The `update` function updates every tick. Just declare a function called `update
 and it will be used.
 
     function update () {
-        
+
     }
