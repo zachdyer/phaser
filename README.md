@@ -10,6 +10,6 @@ Phaser uses a main object `game`. The `game` object is declared like this:
 ### Preloader function
 The `preload` function is where all the game assets are loaded. Just create a function called `preload` and add the assets in the function.
 
-  function preload () {
-      game.load.image('logo', 'img/phaser.png');
-  }
+    function preload () {
+        game.load.image('logo', 'img/phaser.png');
+    }
