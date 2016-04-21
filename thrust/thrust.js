@@ -13,7 +13,7 @@ window.onload = function() {
 
     function preload () {
         game.load.image('ship', '../img/6B.png');
-        game.load.spritesheet('thrust', '../img/thrust.png', 50, 50);
+        game.load.spritesheet('thrust', '../img/thrust.png', 51, 50);
         game.load.audio('thruster_sfx', '../audio/thruster.wav');
     }
 
