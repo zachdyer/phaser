@@ -4,16 +4,9 @@ var
   cursors = null,
   ship = null,
   sfx = null,
-  space = {
-    sprites: [],
-    width: 1280,
-    height: 720
-  },
-  ship = {
-    x: 0,
-    y: 0,
-    sprite: null
-  };
+  space = null,
+  thrust = null,
+  ship = null;
 
 window.onload = function() {
 
@@ -27,65 +20,87 @@ window.onload = function() {
     }
 
     function create () {
-      for(var x = 0; x < game.world.width / space.width; x++) {
-        space.sprites[x] = [];
-        for(var y = 0; y < game.world.height / space.height; y++) {
-          space.sprites[x][y] = game.add.sprite(x * space.width, y * space.height, 'space');
-        }
-      }
+      game.world.setBounds(-1000, -1000, 2000, 2000);
 
-      ship.sprite = game.add.sprite(game.world.centerX, game.world.centerY, 'ship');
-      ship.sprite.anchor.setTo(0.5, 0.5);
+      space = game.add.tileSprite(0, 0, window.innerWidth, window.innerHeight, 'space');
+      space.fixedToCamera = true;
 
-      thrust = game.add.sprite(game.world.centerX, game.world.centerY, 'thrust');
+      ship = game.add.sprite(0, 0, 'ship');
+      ship.speed = 0;
+      ship.anchor.setTo(0.5, 0.5);
+      game.physics.enable(ship, Phaser.Physics.ARCADE);
+      ship.body.maxVelocity.setTo(400, 400);
+      ship.body.drag.set(0.2);
+      ship.body.collideWorldBounds = true;
+
+
+      thrust = game.add.sprite(0, 0, 'thrust');
       thrust.anchor.setTo(1.75, 0.5);
-      thrust.angle = -90;
+      game.physics.enable(thrust, Phaser.Physics.ARCADE);
+      thrust.body.maxVelocity.setTo(400, 400);
+      thrust.body.drag.set(0.2);
+      thrust.body.collideWorldBounds = true;
       thrust.animations.add('up', [0, 1, 2], 30, true);
       thrust.visible = false;
-
-
 
       sfx = game.add.audio('thruster_sfx');
       sfx.loop = true;
 
+      game.camera.follow(ship);
+      game.camera.deadzone - new Phaser.Rectangle(150, 150, 500, 300);
+      game.camera.focusOnXY(0, 0);
+
       cursors = game.input.keyboard.createCursorKeys();
 
-      game.add.text(16, 16, 'Press the up arrow key for thrust and right and left to turn the ship.', { fontSize: '32px', fill: '#fff' });
+      var text = game.add.text(0, 0, 'Press the up arrow key for thrust and right and left to turn the ship.', { fontSize: '32px', fill: '#fff'});
+      text.anchor.setTo(0.5);
     }
 
     function update () {
 
 
       if (cursors.left.isDown) {
-        ship.sprite.angle--;
-        thrust.angle--;
+        ship.angle--;
       }
       if (cursors.right.isDown) {
-        ship.sprite.angle++;
-        thrust.angle++;
+        ship.angle++;
       }
       //Throttle
       if(cursors.up.isDown) {
-        for(var x = 0; x < space.sprites.length; x++) {
-          for(var y = 0; y < space.sprites[x].length; y++) {
-            //space.sprites[x][y].y++;
-          }
-        }
-
+        ship.speed = 300;
         thrust.visible = true;
         thrust.animations.play('up');
-
         if (sfx.isPlaying != true) {
           sfx.volume = 1;
           sfx.play();
         }
+
       } else {
         thrust.visible = false;
         sfx.stop();
+        if(ship.speed > 0) {
+          ship.speed -= 4;
+        }
       }
       if(cursors.down.isDown) {
 
       }
+
+      if(ship.speed > 0) {
+        game.physics.arcade.velocityFromRotation(ship.rotation, ship.speed, ship.body.velocity);
+      }
+
+      space.tilePosition.x = -game.camera.x;
+      space.tilePosition.y = -game.camera.y;
+
+      thrust.x = ship.x;
+      thrust.y = ship.y;
+      thrust.rotation = ship.rotation;
     }
 
+};
+
+window.onresize = function() {
+  game.width = window.innerWidth;
+  game.height = window.innerHeight;
 };
