@@ -39,7 +39,6 @@ window.onload = function() {
       game.physics.enable(thrust, Phaser.Physics.ARCADE);
       thrust.body.maxVelocity.setTo(400, 400);
       thrust.body.drag.set(0.2);
-      thrust.body.collideWorldBounds = true;
       thrust.animations.add('up', [0, 1, 2], 30, true);
       thrust.visible = false;
 
